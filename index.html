@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1727">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Encargos Irlanda">
+<meta name="description" content="Lista colaborativa de encargos y compras en San Diego.">
+<title>Encargos de Irlanda · San Diego</title>
+<link rel="stylesheet" href="styles.css?v=2.1">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="glow-a" aria-hidden="true"></div><div class="glow-b" aria-hidden="true"></div>
+<div class="app">
+<header class="topbar">
+ <div class="brand"><div class="brand-icon">✳</div><div><div class="brand-name">IRLANDA <span>·</span> ENCARGOS</div><div class="brand-sub">SAN DIEGO 2026</div></div></div>
+ <button id="account-button" class="circle-action" aria-label="Cuenta y cerrar sesión" title="Cuenta">◉</button>
+</header>
+<section class="connection" id="connection" role="status"><span class="connection-dot"></span><span id="connection-text">Preparando tu lista…</span></section>
+<main>
+ <section class="view" id="view-home">
+  <div class="hero"><div class="eyebrow">CONTROL DE COMPRAS</div><h1>Todo en<br><em>un solo lugar.</em></h1><p>Los encargos, las compras y las cuentas, siempre claros.</p>
+   <div class="hero-inner"><div><span class="metric-label">Total de compras</span><div class="hero-total" id="hero-total">$0.00 <small>USD</small></div><div class="hero-mxn" id="hero-mxn">Calculando equivalente en pesos…</div></div><div class="hero-spark" aria-hidden="true">✦</div></div>
+  </div>
+  <div class="stat-grid"><div class="stat"><span class="stat-icon">◷</span><span class="metric-label">Por comprar</span><strong id="stat-pending">0</strong><small>encargos pendientes</small></div><div class="stat"><span class="stat-icon accent">✓</span><span class="metric-label">Comprados</span><strong id="stat-bought">0</strong><small>encargos atendidos</small></div></div>
+  <div class="section-heading"><div><div class="eyebrow muted">EN UN VISTAZO</div><h2>Encargos recientes</h2></div><button class="text-button" data-view-link="list">Ver todos →</button></div>
+  <div id="home-wishes" class="stack"></div>
+  <div class="section-heading"><div><div class="eyebrow muted">MOVIMIENTOS</div><h2>Últimas compras</h2></div><button class="text-button" data-view-link="purchases">Historial →</button></div>
+  <div id="home-purchases" class="stack"></div>
+ </section>
+ <section class="view" id="view-list" hidden>
+  <div class="page-head"><div class="eyebrow muted">LISTA COLABORATIVA</div><h1>Por comprar<span class="dot">.</span></h1><p>Agrega lo que necesites, con talla, color y una foto si quieres.</p></div>
+  <div class="section-tools"><input type="search" id="wishlist-search" placeholder="Buscar un encargo…" autocomplete="off" aria-label="Buscar encargo"><select id="wishlist-filter" aria-label="Filtrar encargos"><option value="all">Todos</option><option value="pending">Pendientes</option><option value="bought">Comprados</option></select></div>
+  <div id="wishlist-list" class="stack"></div>
+ </section>
+ <section class="view" id="view-purchases" hidden>
+  <div class="page-head"><div class="eyebrow muted">COMPRAS REGISTRADAS</div><h1>Mis compras<span class="dot">.</span></h1><p>Cada artículo, precio y comprobante en su lugar.</p></div>
+  <div class="section-heading"><div><h2>Historial</h2><span class="subtle" id="purchase-count">0 movimientos</span></div><button id="purchase-export" class="text-button">Exportar CSV ↓</button></div>
+  <div id="purchases-list" class="stack"></div>
+ </section>
+ <section class="view" id="view-account" hidden>
+  <div class="page-head"><div class="eyebrow muted">CUENTAS CLARAS</div><h1>Resumen<span class="dot">.</span></h1><p>Compras y abonos, sin perder ningún detalle.</p></div>
+  <div class="summary"><div><span class="metric-label">Total de compras</span><strong id="summary-purchases">$0.00</strong></div><div><span class="metric-label">Abonos recibidos</span><strong id="summary-paid">$0.00</strong></div><div class="summary-balance"><span class="metric-label">Saldo por liquidar</span><strong id="summary-balance">$0.00</strong><span class="subtle" id="summary-note">No hay movimientos</span></div></div>
+  <div class="section-heading"><div><div class="eyebrow muted">PAGOS</div><h2>Abonos</h2></div><button id="add-payment" class="pill-button owner-only" hidden>＋ Registrar abono</button></div>
+  <div id="payments-list" class="stack"></div>
+  <section class="details-panel"><h3>Conversión a pesos</h3><div id="fx-details">Se consulta automáticamente por internet.</div><button id="refresh-fx" class="text-button">Actualizar tipo de cambio ↻</button><p>El valor en MXN es una estimación. Tu banco puede aplicar una cotización y comisiones distintas.</p></section>
+ </section>
+</main>
+<!-- Minimal author signature -->
+<footer class="al-signature" aria-label="Crédito de autor">
+  <span class="al-signature__mark" aria-hidden="true"><span class="al-signature__initials">AL</span></span>
+  <span class="al-signature__copy"><span class="al-signature__prefix">Developed by</span><span class="al-signature__name">Aldo Lizares</span></span>
+</footer>
+<!-- End signature -->
+<nav class="bottom-nav" aria-label="Secciones"><button class="nav-item active" data-view="home"><span>⌂</span>Inicio</button><button class="nav-item" data-view="list"><span>☷</span>Encargos</button><button id="quick-add" class="nav-plus" aria-label="Nuevo encargo">＋</button><button class="nav-item" data-view="purchases"><span>▣</span>Compras</button><button class="nav-item" data-view="account"><span>◉</span>Cuenta</button></nav>
+</div>
+<div class="modal-backdrop" id="editor-overlay" hidden>
+ <div class="editor" role="dialog" aria-modal="true" aria-labelledby="editor-title"><div class="sheet-grab"></div><div class="editor-heading"><div><div class="eyebrow muted" id="editor-eyebrow">EDITAR</div><h2 id="editor-title">Nuevo encargo</h2></div><button class="circle-action" id="editor-close" aria-label="Cerrar">✕</button></div>
+ <form id="editor-form"><div id="editor-fields"></div><div id="editor-photos" class="editor-photos"></div><div class="button-row"><button id="editor-submit" class="primary" type="submit">Guardar cambios →</button><button id="editor-delete" class="danger" type="button" hidden>Eliminar</button></div></form></div>
+</div>
+<div class="modal-backdrop auth-overlay" id="auth-overlay" hidden><div class="auth-card"><div class="auth-symbol">✳</div><div class="eyebrow">ESPACIO COMPARTIDO</div><h2>Bienvenida a<br>tus encargos.</h2><p>Inicia sesión para consultar o actualizar la lista desde cualquier dispositivo.</p><form id="login-form"><label>Correo electrónico<input id="login-email" type="email" autocomplete="username" required placeholder="correo@ejemplo.com"></label><label>Contraseña<input id="login-password" type="password" autocomplete="current-password" required></label><button class="primary" id="login-submit">Entrar →</button><span id="login-error" class="error" role="alert"></span></form><div id="setup-message" class="setup-message" hidden>Falta configurar la conexión privada a Supabase. Consulta el archivo INSTRUCCIONES.md incluido con esta aplicación.</div></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
