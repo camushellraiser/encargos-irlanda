@@ -156,3 +156,35 @@ function attachUI(){qa('[data-view]').forEach(b=>b.addEventListener('click',()=>
  window.addEventListener('online',()=>{if(active())scheduleReload();refreshFX()});window.addEventListener('visibilitychange',()=>{if(!document.hidden&&active())scheduleReload()});
 }
 attachUI();render();initialize();
+
+/* iOS standalone PWAs can restore a magnified visual viewport after input focus.
+   Keep the private login dialog inside the visible portion without disabling pinch zoom. */
+(function keepLoginInVisibleViewport(){
+ const overlay=document.getElementById('auth-overlay');
+ const vv=window.visualViewport;
+ if(!overlay||!vv)return;
+ const keys=['left','top','right','bottom','width','height'];
+ function update(){
+   if(overlay.hidden||vv.scale<=1.02){
+     for(const prop of keys)overlay.style.removeProperty(prop);
+     return;
+   }
+   overlay.style.left=vv.offsetLeft+'px';
+   overlay.style.top=vv.offsetTop+'px';
+   overlay.style.right='auto';
+   overlay.style.bottom='auto';
+   overlay.style.width=vv.width+'px';
+   overlay.style.height=vv.height+'px';
+ }
+ vv.addEventListener('resize',update);
+ vv.addEventListener('scroll',update);
+ window.addEventListener('pageshow',()=>{
+   if(!overlay.hidden&&overlay.contains(document.activeElement))document.activeElement.blur();
+   requestAnimationFrame(update);
+ });
+ document.addEventListener('visibilitychange',()=>{
+   if(!document.hidden)requestAnimationFrame(update);
+ });
+ new MutationObserver(update).observe(overlay,{attributes:true,attributeFilter:['hidden']});
+ update();
+})();
