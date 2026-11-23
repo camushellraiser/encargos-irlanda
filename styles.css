@@ -17,3 +17,10 @@
 .al-signature{display:flex;justify-content:center;align-items:center;gap:10px;margin:26px 0 0;padding:17px 0 2px;border-top:1px solid var(--stroke);color:var(--muted)}.al-signature__mark{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:50%;border:1px solid #456849;background:#192b2b;color:var(--lime)}.al-signature__initials{font-family:'Iowan Old Style',Baskerville,Georgia,serif;font-size:17px;font-weight:600;font-style:italic;letter-spacing:-.13em;line-height:1;transform:translateX(-1.5px)}.al-signature__copy{display:inline-flex;align-items:baseline;flex-wrap:wrap;column-gap:4px;line-height:1.45}.al-signature__prefix{color:var(--muted);font-size:10.5px;font-weight:500}.al-signature__name{color:var(--text);font-family:Manrope,'DM Sans',sans-serif;font-size:12px;font-weight:650;letter-spacing:-.025em}
 @media(min-width:700px){.app{padding:35px 40px 130px}.hero{padding:32px 38px}.stat-grid{gap:18px}.stat{padding:23px}.editor{border-radius:24px;margin:auto;align-self:center;max-height:90vh}.modal-backdrop{align-items:center}.stack{gap:13px}}@media(max-width:410px){.app{padding:calc(12px + env(safe-area-inset-top,0px)) 15px 112px}.hero{padding:21px}.brand-name{font-size:11px}.brand-icon{height:37px;width:37px}.fields-grid{grid-template-columns:1fr}.item-card{padding:11px}.badge{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
+
+
+/* iOS Safari: keep focused form controls readable without auto-zoom; contain auth dialog. */
+.auth-overlay{width:100%;max-width:100%;overflow-x:clip;overflow-y:auto;overscroll-behavior:contain}
+.auth-card{min-width:0;max-width:100%;flex-shrink:1}
+.auth-card input,.field,.section-tools input,.section-tools select,.editor input,.editor select,.editor textarea{font-size:16px}
+@media(max-width:600px){.auth-overlay{padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(12px + env(safe-area-inset-bottom,0px))}.auth-card{width:100%;max-width:420px;padding:26px 22px}}
